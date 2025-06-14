@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gym Builders - SMMA for Gyms</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="fa.png">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: url('https://i0.wp.com/www.strengthlog.com/wp-content/uploads/2022/05/bodybuilding-exercises.jpg?fit=1000%2C667&ssl=1') no-repeat center center/cover;
+      color: #FFFFFF;
+      overflow-x: hidden;
+      animation: gradientMove 10s ease infinite;
+    }
+    .process {
+      text-align: center;
+    }
+
+    .process h2 {
+      font-size: 48px;
+      margin-bottom: 40px;
+      color: #fff;
+    }
+
+    .phases {
+      display: flex;
+      flex-direction: row;
+      gap: 30px;
+      width: 100%;
+      max-width: 10000px;
+      overflow: hidden;
+    }
+
+    .phase {
+      position: relative;
+      overflow:hidden;
+      padding: 40px 30px;
+      border: 1px solid #333;
+      border-radius: 12px;
+      background: #111;
+      cursor: pointer;
+      transition: all 0.5s ease;
+    }
+
+    .phase h3 {
+      margin: 0;
+      font-size: 28px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #fff;
+      position: relative;
+      z-index: 2;
+    }
+
+    .phase p {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #aaa;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Hover Color Overlay */
+    .phase::before {
+      content: '';
+      position: absolute;
+      bottom: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, #ff0055, #00ffff, #ffcc00);
+      z-index: 1;
+      transition: all 0.6s ease;
+      transform: skewY(10deg);
+    }
+
+    .phase:hover::before {
+      bottom: 0;
+    }
+
+    /* Text color changes on hover */
+    .phase:hover h3,
+    .phase:hover p {
+      color: #000;
+    }
+    nav {
+      background-color: white;
+      border-radius: 40px; /* Curved edges */
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      position: fixed;
+      top: 0;
+      padding: 20px 60px;
+      display: flex;
+      gap: 30px;
+      width: 50%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 10;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: space-around ;
+      display: flex;
+      margin-left: 25%;
+    }
+   .nav-logo img {
+      height: 350px;
+      filter: drop-shadow(0 0 10px purple);
+      margin: 0;
+      top:0;
+      padding: 0.5rem 12rem;
+  
+      display: flex;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 0;
+      padding-left: 12pxs;
+    }
+    nav li a {
+      color: white;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-decoration: none;
+    padding-right:10px ;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      padding-right: auto;
+    }
+    nav li a:hover {
+      filter: drop-shadow(0 0 10px purple);
+      margin-right: 10px;
+    color:purple;
+    }
+    header {
+      margin-top: 0;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 3.5rem;
+      margin: 0;
+    }
+    header p {
+      margin-top: 0.5rem;
+      font-size: 1.5rem;
+      color: #CCCCCC;
+    }
+    .cta-button {
+      margin-top: 2rem;
+      background-color: #00BFFF;
+      color: #FFFFFF;
+      padding: 1rem 2rem;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .cta-button:hover {
+      background-color: #007ACC;
+      transform: scale(1.05);
+    }
+    section {
+      padding: 5rem 2rem;
+    }
+    h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+    .services, .pricing, .contact {
+      background: rgba(0,0,0,0.6);
+      margin: 2rem auto;
+      border-radius: 15px;
+      max-width: 1100px;
+      padding: 3rem;
+      box-shadow: 0 0 20px purple;
+    }
+    .service-box, .pricing-card {
+      background: black;
+      border: 1px solid gold;
+      border-radius: 10px;
+      padding: 2rem;
+      margin: 1rem 0;
+      text-align: center;
+    }
+    .service-box button, .pricing-card button {
+      margin-top: 1rem;
+      background: #00BFFF;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 5px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .service-box button:hover, .pricing-card button:hover {
+      background: #007ACC;
+    }
+    .image-section {
+      text-align: center;
+      margin: 4rem 0;
+    }
+    .image-section img {
+      width: 300px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px purple;
+    }
+    .form-section {
+      background: rgba(0,0,0,0.6);
+      padding: 3rem;
+      border-radius: 15px;
+      max-width: 600px;
+      margin: 4rem auto;
+      box-shadow: 0 0 20px purple;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 8px;
+    }
+    form button {
+      width: 100%;
+      background: #00BFFF;
+      color: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: black;
+      color: #AAAAAA;
+    }
+    .pricing-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.pricing-card {
+  background: linear-gradient(145deg, #111111, #000000);
+  border-radius: 15px;
+  padding: 2rem;
+  width: 300px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.pricing-card h3 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.price {
+  font-size: 2.5rem;
+  color: white;
+  margin-bottom: 1.5rem;
+}
+
+.price span {
+  font-size: 1rem;
+  color: #aaa;
+}
+
+.pricing-card ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.pricing-card ul li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  color: #cccccc;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.pricing-card ul li::before {
+  content: '✔';
+  position: absolute;
+  left: 0;
+  color: #00BFFF;
+}
+
+.pricing-card button {
+  background: #00BFFF;
+  color: black;
+  padding: 0.8rem 2rem;
+  border: none;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.pricing-card button:hover {
+  background: #007ACC;
+  transform: scale(1.05);
+}
+
+/* Borders for Gold, Silver, Bronze */
+.pricing-card.gold {
+  border: 2px solid gold;
+  box-shadow: 0 0 20px gold;
+}
+
+.pricing-card.silver {
+  border: 2px solid silver;
+  box-shadow: 0 0 20px silver;
+}
+
+.pricing-card.bronze {
+  border: 2px solid #cd7f32;
+  box-shadow: 0 0 20px #cd7f32;
+}
+@media (max-width: 1024px) {
+  nav {
+    width: 90%;
+    margin-left: 5%;
+    padding: 10px 20px;
+  }
+  
+  nav ul {
+    flex-direction: row;
+    gap: 1rem;
+    padding-left: 0;
+  }
+
+  .nav-logo img {
+    height: 200px;
+    padding: 0.5rem 0;
+  }
+
+  header h1 {
+    font-size: 2.5rem;
+  }
+
+  header p {
+    font-size: 1.2rem;
+  }
+
+  .services, .pricing, .contact {
+    padding: 2rem 1rem;
+  }
+
+  .service-box, .pricing-card {
+    padding: 1.5rem;
+    margin: 1rem 0;
+  }
+
+  .phases {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    width: 95%;
+    margin-left: 2.5%;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav-logo img {
+    height: 150px;
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+
+  header p {
+    font-size: 1rem;
+  }
+
+  .service-box img,
+  .pricing-card img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .pricing-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  section {
+    padding: 3rem 1rem;
+  }
+
+  form input, form textarea, form button {
+    font-size: 1rem;
+  }
+}
+
+
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="nav-logo" id="mi">
+    <img src="agm logo.png" alt="Gym Builders Logo">
+  </div>
+  <h1>Abyssinia Gym Marketing Media</h1>
+  <p>Empowering Gyms To Build Stronger Brands</p>
+  <a href="#lo" class="cta-button">Get Started</a>
+</header>
+<section id="about" class="services">
+  <h2>Our Services</h2>
+  <div class="service-box">
+    <img src="https://cdn-icons-png.flaticon.com/512/14106/14106121.png" title="icon" width="100px" height="100px">
+    <h3>Social Media Management</h3>
+    <p>Grow your audience and engage your community with our expert social media managers.</p>
+    <a href="https://t.me/agmmedia17"><button>Order Now</button></a>
+    <a href="https://pdfhost.io/v/ZKQvfWfEfd_White_Blue_Simple_Modern_Digital_Marketer_Resume__2_"><button>Portfolio</button></a>
+  </div>
+  <div class="service-box">
+    <img src="https://cdn-icons-png.flaticon.com/512/10438/10438743.png" title="content" width="100px" height="100px">
+    <h3>Content creation</h3>
+    <p>Professional fitness media content tailored for your brand's growth.Including caerousols ,vlogs and short reel etc.</p>
+    <a href="https://t.me/agmmedia17"><button>Order Now</button></a>
+    <a href="https://www.instagram.com/p/DCaK7ZiJSJR/"><button>Portfolio</button></a>
+  </div>
+  <div class="service-box">
+    <img src="https://cdn2.iconfinder.com/data/icons/facebook-ads-1/204/1-512.png" title="ad" width="100px">
+    <h3>Running facebook Ads</h3>
+    <p>We help Gyms Produce Spine-Chilling ROI Via Paid Advertising</p>
+    <a href="https://t.me/agmmedia17"><button>Order Now</button></a>
+    <a href="https://t.me/agmmedia17"><button>Portfolio</button></a>
+  </div>
+  <div class="service-box">
+    <img src="https://cdn-icons-png.flaticon.com/512/8386/8386359.png" title="strategy" width="100px">
+    <h3>Strategy Development</h3>
+    <p>We analyze problems holding you back and provide you with goals,plan and strategy.</p>
+    <a href="https://t.me/agmmedia17"><button>Order Now</button></a>
+    <a href="https://t.me/agmmedia17"><button>Portfolio</button></a>
+    </div>
+    <div class="service-box">
+      <img src="https://freemiumicons.com/wp-content/uploads/2022/05/community-development-icon.png" title="strategy" width="100px">
+      <h3>Community Managment</h3>
+      <p>We build connection between your gym members and put them on a community base.</p>
+      <a href="https://t.me/agmmedia17"><button>Order Now</button></a>
+      <a href="https://t.me/maverick_ethiopia"><button>Portfolio</button></a>
+    </div>
+    <div class="service-box">
+      <img src="https://cdn-icons-png.freepik.com/256/17365/17365478.png?semt=ais_hybrid" title="strategy" width="100px">
+      <h3>Web Development</h3>
+      <p>We build both landing page and also functional websites.</p>
+      <a href="https://t.me/agmmedia17"><button>Order Now</button></a>
+      <a href="https://ethionova.netlify.app/"><button>Portfolio</button></a>
+    </div>
+    <div class="service-box">
+      <img src="https://cdn-icons-png.flaticon.com/512/10926/10926913.png" title="strategy" width="100px">
+      <h3>Influential Marketing</h3>
+      <p>We help your gym grow through influential people that are working on sectors related to your field.</p>
+      <a href="https://t.me/agmmedia17"><button>Order Now</button></a>
+      <a href="https://t.me/agmmedia17"><button>Portfolio</button></a>
+    </div>
+    <div class="service-box">
+      <img src="https://cdn4.iconfinder.com/data/icons/seo-dual-color-glyph-set-1/128/brand_development-512.png" title="strategy" width="100px">
+      <h3>Brand Development</h3>
+      <p>We help your gym grow by crating new brands including color pallete,font style and Logo</p>
+      <a href="https://t.me/agmmedia17"><button>Order Now</button></a>
+      <a href="https://www.instagram.com/maverick_ethiopia/"><button>Portfolio</button></a>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="pricing">
+  <h2>What Makes Us Different</h2>
+  <div class="pricing-container">
+    
+    <div class="pricing-card silver">
+      <h3><pre>1. Risk Reversal</pre></h3>
+     <p>If you we don't achieve our results</p>
+      <ul>
+        <li>We work one for free or</li>
+        <li>You will pay us 50%</li></ul>
+        <a href="https://t.me/agmmedia17"><button>Buy now</button></a>
+    </div>
+
+    <div class="pricing-card gold">
+      <h3><pre>2. Specification</pre></h3>
+     <p>Since We are working only for gyms</p>
+      <ul>
+        <li>We work professionally </li>
+        <li>We deliver quality work</li></ul>
+        <a href="https://t.me/agmmedia17"><button>Buy now</button></a>
+    </div>
+
+    <div class="pricing-card bronze">
+      <h3><pre>3. Value Driven</pre></h3>
+     <p>We foucus more one delivering value rather than only service</p>
+     <h3>Our KPI</h3>
+      <ul>
+        <li>Social Media growth</li>
+        <li>Gym membership increase</li>
+        <li>Increase in reach and impression</li>
+      </ul>
+      <a href="https://t.me/agmmedia17"><button>Buy now</button></a>
+    </div>
+  </div>
+</section>
+<section id="contact" class="pricing">
+
+  <div class="process" id="process">
+    <h2>Our Process</h2>
+  
+    <div class="phases">
+      <div class="phase">
+        <h3>Phase 1 — Cold Calling
+        </h3>
+        <p>We call potential</br> gym house and</br> introduce them </br>our service.</br></br>
+        Note: We only call gyms if they are fit and attractive to be advertised.
+        </p>
+      </div>
+  
+      <div class="phase">
+        <h3>Phase 2 — Proposal Signing</h3>
+        <p>After the cold calling </br>session succeed we will write</br> a proposal for providing the service</p>
+      </div>
+  
+      <div class="phase">
+        <h3>Phase 3 — Contract Signing</h3>
+        <p>After the proposal get accepted</br> we will sign a contract to start the work</br>And start working</p>
+      </div>
+      <div class="phase">
+        <h3>Phase 4 — Payment</h3>
+        <p>After we deliver our service we will get paid based on the package you bought.
+
+        </br>
+        No invoice required
+        </p>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+<section id="contact" class="form-section">
+  <h2>Contact Us</h2>
+  <form action="https://api.web3forms.com/submit" method="post" id="lo">
+    <input type="hidden" name="access_key" value="aaf8a9b9-a87f-474d-a12d-9514f7a25e8b">
+    <input type="text" name="Full name"placeholder="Full Name" required>
+    <input type="email" name="email"placeholder="Email Address" required>
+    <input type="tel" name="phone "placeholder="Phone Number" required>
+    <textarea rows="5" name="Message" placeholder="Your Message" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+</section>
+<script src="https://web3forms.com/client/script.js" async defer></script>
+<footer>
+  &copy; 2025 Gym Builders. All rights reserved.
+</footer>
+
+</body>
+</html>
